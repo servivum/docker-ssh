@@ -1,6 +1,9 @@
 #!/bin/bash
 set -ev
 
+echo "Printing Docker version ..."
+docker version
+
 echo "Building image ..."
 docker build -t servivum/ssh .
 
