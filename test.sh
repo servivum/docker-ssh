@@ -2,17 +2,17 @@
 set -ev
 
 echo "Building image ..."
-docker image build -t servivum/ssh .
+docker build -t servivum/ssh .
 
 echo "Running image ..."
-docker container run -d -P --name ssh -e "SSH_USER=john" -e "SSH_PASSWORD=doe" servivum/ssh
+docker run -d -P --name ssh -e "SSH_USER=john" -e "SSH_PASSWORD=doe" servivum/ssh
 
 echo "Checking if container is running ..."
-docker container ps | grep ssh
+docker ps | grep ssh
 
 echo "Checking existence of some binaries and packages ..."
-docker container exec ssh which sshd
-docker container exec ssh ps aux | grep sshd
+docker exec ssh which sshd
+docker exec ssh ps aux | grep sshd
 
 echo "Getting IP address of external docker-machine or using localhost instead ..."
 if ! docker-machine ip; then
