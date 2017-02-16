@@ -8,7 +8,7 @@ Dockerfile with SSH server based on a tiny Alpine Linux.
 
 - `7.2`, `latest` [(Dockerfile)](https://github.com/servivum/docker-ssh)
 
-## Log with Username and Password
+## Login with Username and Password
 
 Mount your public key into the container and define the path with 
 environment variable `SSH_AUTHORIZED_KEYS`. Example:
