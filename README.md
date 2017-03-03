@@ -10,9 +10,6 @@ Dockerfile with SSH server based on a tiny Alpine Linux.
 
 ## Login with Username and Password
 
-Mount your public key into the container and define the path with 
-environment variable `SSH_AUTHORIZED_KEYS`. Example:
-
 ```bash
 docker container run -d -P -e "SSH_USER=john" -e "SSH_PASSWORD=doe" servivum/ssh
 ```
