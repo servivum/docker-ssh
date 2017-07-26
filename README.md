@@ -13,3 +13,9 @@ Dockerfile with SSH server based on a tiny Alpine Linux.
 ```bash
 docker container run -d -P -e "SSH_USER=john" -e "SSH_PASSWORD=doe" servivum/ssh
 ```
+
+## Login with SSH Public Key
+
+```bash
+docker container run -d -P -e "SSH_ROOT_PUBLIC_KEY=ssh-rsa bla test@example.com" servivum/ssh
+```

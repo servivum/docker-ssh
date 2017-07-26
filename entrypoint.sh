@@ -16,9 +16,22 @@ if [ ! -d "/var/run/sshd" ]; then
 fi
 
 # Create user and set password
-if ([ "$SSH_USER" ] || [ "$SSH_PASSWORD" ]); then
+if ([ "$SSH_USER" ] && [ "$SSH_PASSWORD" ]); then
     adduser -D $SSH_USER
     echo "$SSH_USER:$SSH_PASSWORD" | chpasswd
+    echo "User ($SSH_USER) created."
+else
+    echo "No credentials given."
+fi;
+
+# Login with
+if ([ "$SSH_ROOT_PUBLIC_KEY" ]); then
+    mkdir -p ~/.ssh/
+    touch ~/.ssh/authorized_keys
+    echo "$SSH_ROOT_PUBLIC_KEY" > ~/.ssh/authorized_keys
+    echo "Public key added to root user."
+else
+    echo "No SSH key given."
 fi;
 
 exec "$@"

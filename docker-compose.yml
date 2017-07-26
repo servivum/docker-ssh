@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  ssh:
+    image: servivum/ssh:7.2
+    ports:
+      - "22:2222"
+    environment:
+      SSH_USER: john
+      SSH_PASSWORD: doe
+      SSH_ROOT_PUBLIC_KEY: "ssh-rsa abc test@example.com"
