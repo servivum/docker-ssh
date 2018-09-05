@@ -2,10 +2,12 @@ version: "3.7"
 
 services:
   ssh:
-    image: servivum/ssh:7.2
-    ports:
-      - "22:2222"
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
       SSH_USER: john
       SSH_PASSWORD: doe
       SSH_ROOT_PUBLIC_KEY: "ssh-rsa abc test@example.com"
+    ports:
+      - "22:2222"
