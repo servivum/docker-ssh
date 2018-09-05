@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:3.7
 LABEL maintainer "Patrick Baber <patrick.baber@servivum.com>"
 
 # Install openssh-server
