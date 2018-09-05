@@ -7,7 +7,14 @@ services:
       dockerfile: Dockerfile
     environment:
       SSH_USER: john
+      SSH_USER_FILE: "/run/secrets/ssh_user"
       SSH_PASSWORD: doe
-      SSH_ROOT_PUBLIC_KEY: "ssh-rsa abc test@example.com"
+      SSH_PASSWORD_FILE: /run/secrets/ssh_password
+      SSH_PUBLIC_KEY: "ssh "
+      SSH_PUBLIC_KEY_FILE: "/run/secrets/authorized_keys"
+      SSH_SHELL: "/bin/bash"
+      SSH_HOME_DIR: "/var/www"
+      SSH_USER_ID: 99
+      SSH_GROUP_ID: 99
     ports:
       - "22:2222"

@@ -20,11 +20,6 @@ if [ ! -f "/etc/ssh/ssh_host_rsa_key" ]; then
 	ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
 fi
 
-# Prepare run dir
-if [ ! -d "/var/run/sshd" ]; then
-    mkdir -p /var/run/sshd
-fi
-
 # Create user and set password
 if ([ "$SSH_USER" ] && [ "$SSH_PASSWORD" ]); then
     adduser -D $SSH_USER
