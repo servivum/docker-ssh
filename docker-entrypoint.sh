@@ -106,10 +106,18 @@ if [ "$public_key" ]; then
     mkdir -p $home_dir/.ssh/
 fi
 
+# Create group
+group_id_command=""
+if [ "$SSH_GROUP_ID" ]; then
+    echo "Using group ID $SSH_GROUP_ID…"
+    addgroup -g $SSH_GROUP_ID $user
+    group_id_command="-G $user"
+fi
+
 # Create user
 if ! id "$1" > /dev/null 2>&1; then
     echo "User ($user) created."
-    adduser $password_command $home_dir_command $shell_command $user_id_command $user
+    adduser $password_command $home_dir_command $shell_command $user_id_command $group_id_command $user
 fi
 
 # Insert public keys

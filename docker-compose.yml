@@ -15,6 +15,7 @@ services:
       SSH_HOME_DIR: "/var/www"
       SSH_SHELL: "/bin/bash"
       SSH_USER_ID: 99
+      SSH_GROUP_ID: 101
     ports:
       - "2222:22"
     volumes:
