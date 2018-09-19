@@ -7,14 +7,18 @@ services:
       dockerfile: Dockerfile
     environment:
       SSH_USER: john
-      SSH_USER_FILE: "/run/secrets/ssh_user"
-      SSH_PASSWORD: doe
-      SSH_PASSWORD_FILE: /run/secrets/ssh_password
-      SSH_PUBLIC_KEY: "ssh "
+      #SSH_USER_FILE: "/run/secrets/ssh_user"
+      #SSH_PASSWORD: doe
+      #SSH_PASSWORD_FILE: "/run/secrets/ssh_password"
+      #SSH_PUBLIC_KEY: "ssh bla"
       SSH_PUBLIC_KEY_FILE: "/run/secrets/authorized_keys"
-      SSH_SHELL: "/bin/bash"
       SSH_HOME_DIR: "/var/www"
+      SSH_SHELL: "/bin/bash"
       SSH_USER_ID: 99
-      SSH_GROUP_ID: 99
     ports:
-      - "22:2222"
+      - "2222:22"
+    volumes:
+      - "./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh"
+      - "./test-secrets/ssh_user:/run/secrets/ssh_user"
+      - "./test-secrets/ssh_password:/run/secrets/ssh_password"
+      - "./test-secrets/authorized_keys:/run/secrets/authorized_keys"
