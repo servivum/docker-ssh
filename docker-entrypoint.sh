@@ -71,8 +71,6 @@ else
     home_dir="/home/$user"
 fi
 
-echo "My home dir: $home_dir"
-
 # Create home directory
 if [ ! -d "$home_dir" ]; then
     echo "Creating home directory: $home_dir"
@@ -123,9 +121,15 @@ fi
 # Insert public keys
 touch $home_dir/.ssh/authorized_keys
 echo "$public_key" > $home_dir/.ssh/authorized_keys
-chown -R $user:$user $home_dir/.ssh
 chmod 0700 $home_dir/.ssh
 chmod 0600 $home_dir/.ssh/authorized_keys
+
+if [ "$SSH_GROUP_ID" ]; then
+    chown -R $user:$user $home_dir/.ssh
+else
+    chown -R $user $home_dir/.ssh
+fi
+
 echo "Public key added"
 
 # Set password
