@@ -123,7 +123,7 @@ if ! id "$1" > /dev/null 2>&1; then
     adduser $password_command $home_dir_command $shell_command $user_id_command $group_id_command $user
 fi
 
-# Set permission for
+# Change owner .ssh directory
 if [ "$SSH_GROUP_ID" ]; then
     chown -R $user:$user $home_dir/.ssh
 else
