@@ -8,7 +8,11 @@ echo "Building image ..."
 docker build -t servivum/ssh .
 
 echo "Running image ..."
-docker run -d -P --name ssh -e "SSH_USER=john" -e "SSH_PASSWORD=doe" -e "SSH_ROOT_PUBLIC_KEY=ssh-rsa abc test@example.com" servivum/ssh
+docker run -d -P --rm --name ssh \
+    -e "SSH_USER=john" \
+    -e "SSH_PASSWORD=doe" \
+    -e "SSH_PUBLIC_KEY=ssh-rsa abc test@example.com" \
+    servivum/ssh
 
 echo "Checking if container is running ..."
 docker ps | grep ssh
