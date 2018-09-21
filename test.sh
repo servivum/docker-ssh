@@ -1,27 +1,27 @@
 #!/bin/bash
 set -ev
 
-echo "Printing Docker version ..."
+echo "Printing Docker version…"
 docker version
 
-echo "Building image ..."
+echo "Building image…"
 docker build -t servivum/ssh .
 
-echo "Running image ..."
+echo "Running image…"
 docker run -d -P --rm --name ssh \
     -e "SSH_USER=john" \
     -e "SSH_PASSWORD=doe" \
     -e "SSH_PUBLIC_KEY=ssh-rsa abc test@example.com" \
     servivum/ssh
 
-echo "Checking if container is running ..."
+echo "Checking if container is running…"
 docker ps | grep ssh
 
-echo "Checking existence of some binaries and packages ..."
+echo "Checking existence of some binaries and packages…"
 docker exec ssh which sshd
 docker exec ssh ps aux | grep sshd
 
-echo "Getting IP address of external docker-machine or using localhost instead ..."
+echo "Getting IP address of external docker-machine or using localhost instead…"
 if ! docker-machine ip; then
     export IP="127.0.0.1"
 else
@@ -34,3 +34,6 @@ echo "PORT: $PORT"
 docker ps
 
 # @TODO: Add test for establishing connection over SSH
+
+echo "Stopping container…"
+docker stop ssh
