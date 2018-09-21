@@ -60,25 +60,6 @@ else
     public_key="$SSH_PUBLIC_KEY"
 fi
 
-# Set home directory
-home_dir_command=""
-if [ "$user" == "root" ]; then
-    home_dir="/root"
-elif ([ "$user" != "root" ] && [ $SSH_HOME_DIR ]); then
-    home_dir="$SSH_HOME_DIR"
-    home_dir_command="-h $home_dir"
-else
-    home_dir="/home/$user"
-fi
-
-# Create home directory
-if [ ! -d "$home_dir" ]; then
-    echo "Creating home directory: $home_dir"
-    mkdir -p $SSH_HOME_DIR
-else
-    echo "Using default home directory /home/$user"
-fi
-
 # Set shell if defined
 if [ "$SSH_SHELL" ]; then
     echo "Using $SSH_SHELL as user shell…"
@@ -98,10 +79,34 @@ else
     user_id_command=""
 fi
 
-# Create public key folder if needed
+# Use custom home directory
+home_dir_command=""
+if [ "$user" == "root" ]; then
+    home_dir="/root"
+elif ([ "$user" != "root" ] && [ $SSH_HOME_DIR ]); then
+    home_dir="$SSH_HOME_DIR"
+    home_dir_command="-h $home_dir"
+else
+    home_dir="/home/$user"
+fi
+
+# Create home directory
+if [ ! -d "$home_dir" ]; then
+    echo "Creating home directory: $home_dir"
+    mkdir -p $SSH_HOME_DIR
+else
+    echo "Using default home directory /home/$user"
+fi
+
+# Place public keys in home folder
 if [ "$public_key" ]; then
     echo "Creating folder $home_dir/.ssh/"
     mkdir -p $home_dir/.ssh/
+    touch $home_dir/.ssh/authorized_keys
+    echo "$public_key" > $home_dir/.ssh/authorized_keys
+    chmod 0700 $home_dir/.ssh
+    chmod 0600 $home_dir/.ssh/authorized_keys
+    echo "Public key added"
 fi
 
 # Create group
@@ -118,19 +123,12 @@ if ! id "$1" > /dev/null 2>&1; then
     adduser $password_command $home_dir_command $shell_command $user_id_command $group_id_command $user
 fi
 
-# Insert public keys
-touch $home_dir/.ssh/authorized_keys
-echo "$public_key" > $home_dir/.ssh/authorized_keys
-chmod 0700 $home_dir/.ssh
-chmod 0600 $home_dir/.ssh/authorized_keys
-
+# Set permission for
 if [ "$SSH_GROUP_ID" ]; then
     chown -R $user:$user $home_dir/.ssh
 else
     chown -R $user $home_dir/.ssh
 fi
-
-echo "Public key added"
 
 # Set password
 if [ "$password" ]; then
