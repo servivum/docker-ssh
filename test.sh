@@ -14,6 +14,8 @@ docker run -d -P --rm --name ssh \
     -e "SSH_PUBLIC_KEY=ssh-rsa abc test@example.com" \
     servivum/ssh
 
+sleep 5
+
 echo "Checking if container is running…"
 docker ps | grep ssh
 
