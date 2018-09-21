@@ -13,6 +13,7 @@ services:
       #SSH_PUBLIC_KEY: "ssh bla"
       SSH_PUBLIC_KEY_FILE: "/run/secrets/authorized_keys"
       SSH_HOME_DIR: "/var/www"
+      SSH_CHOWN_HOME_DIR: "true"
       SSH_SHELL: "/bin/bash"
       SSH_USER_ID: 99
       SSH_GROUP_ID: 101

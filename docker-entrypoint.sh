@@ -141,5 +141,15 @@ else
     passwd -d $user
 fi
 
+# Change owner of home dir
+if [ "$SSH_CHOWN_HOME_DIR" ]; then
+    echo "Changing owner of home dir…"
+    if [ "$SSH_GROUP_ID" ]; then
+        chown -R $user:$user $home_dir
+    else
+        chown -R $user $home_dir
+    fi
+fi
+
 echo "Running sshd…"
 exec "$@"
