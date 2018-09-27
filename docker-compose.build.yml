@@ -2,5 +2,12 @@ version: "3.7"
 
 services:
   ssh-7.5:
+    image: servivum/ssh:7.5
     build:
       context: 7.5/
+      dockerfile: 7.5/Dockerfile
+  ssh-7.5-static-website:
+    image: servivum/ssh:7.5-static-website
+    build:
+      context: 7.5-static-website/
+      dockerfile: 7.5-static-website/Dockerfile
