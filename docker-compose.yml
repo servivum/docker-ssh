@@ -3,8 +3,7 @@ version: "3.7"
 services:
   ssh:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: 7.5/
     environment:
       SSH_USER: john
       #SSH_USER_FILE: "/run/secrets/ssh_user"
@@ -20,7 +19,7 @@ services:
     ports:
       - "2222:22"
     volumes:
-      - "./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh"
+      - "./7.5/usr/local/bin/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh"
       - "./test-secrets/ssh_user:/run/secrets/ssh_user"
       - "./test-secrets/ssh_password:/run/secrets/ssh_password"
       - "./test-secrets/authorized_keys:/run/secrets/authorized_keys"

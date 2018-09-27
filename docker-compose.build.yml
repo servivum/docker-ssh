@@ -1,8 +1,6 @@
 version: "3.7"
 
 services:
-  ssh:
-    image: servivum/ssh:7.2
+  ssh-7.5:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: 7.5/

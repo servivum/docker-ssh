@@ -22,7 +22,8 @@ RUN apk add --no-cache \
     echo "Preparing run direcotry for sshd…" && \
     mkdir -p /var/run/sshd
 
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY etc/motd /etc/motd
+COPY usr/local/bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 VOLUME /etc/ssh/host_keys/
 EXPOSE 22
