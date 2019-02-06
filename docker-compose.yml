@@ -7,10 +7,10 @@ services:
     environment:
       SSH_USER: john
       #SSH_USER_FILE: "/run/secrets/ssh_user"
-      #SSH_PASSWORD: doe
+      SSH_PASSWORD: doe
       #SSH_PASSWORD_FILE: "/run/secrets/ssh_password"
       #SSH_PUBLIC_KEY: "ssh bla"
-      SSH_PUBLIC_KEY_FILE: "/run/secrets/authorized_keys"
+      #SSH_PUBLIC_KEY_FILE: "/run/secrets/authorized_keys"
       SSH_HOME_DIR: "/var/www"
       SSH_CHOWN_HOME_DIR: "true"
       SSH_SHELL: "/bin/bash"
