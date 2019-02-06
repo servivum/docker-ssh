@@ -20,6 +20,6 @@ services:
       - "2222:22"
     volumes:
       - "./7.5/usr/local/bin/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh"
-      - "./test-secrets/ssh_user:/run/secrets/ssh_user"
-      - "./test-secrets/ssh_password:/run/secrets/ssh_password"
-      - "./test-secrets/authorized_keys:/run/secrets/authorized_keys"
+      - "./test/ssh_user:/run/secrets/ssh_user"
+      - "./test/ssh_password:/run/secrets/ssh_password"
+      - "./test/authorized_keys:/run/secrets/authorized_keys"
