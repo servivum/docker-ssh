@@ -2,11 +2,12 @@
 
 # SSH Server Docker Image
 
-Dockerfile with SSH server based on a tiny Alpine Linux.
+Dockerfile with SSH server based on a tiny Alpine Linux and if needed, preinstalled with common utilities.
 
 ## Supported Tags
 
-- `7.5`, `latest` [(Dockerfile)](https://github.com/servivum/docker-ssh)
+- `7.5`, `latest` [(Dockerfile)](https://github.com/servivum/docker-ssh/blob/master/7.5/Dockerfile)
+- `7.5-common` [(Dockerfile)](https://github.com/servivum/docker-ssh/blob/master/7.5-common/Dockerfile)
 
 ## Login with Username and Password
 

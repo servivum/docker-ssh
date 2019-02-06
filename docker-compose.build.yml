@@ -5,7 +5,7 @@ services:
     image: servivum/ssh:7.5
     build:
       context: 7.5/
-  ssh-7.5-static-website:
-    image: servivum/ssh:7.5-static-website
+  ssh-7.5-common:
+    image: servivum/ssh:7.5-common
     build:
-      context: 7.5-static-website/
+      context: 7.5-common/

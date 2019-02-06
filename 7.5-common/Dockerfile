@@ -6,6 +6,7 @@ RUN apk add --no-cache \
     git \
     iputils \
     mc \
+    mysql-client \
     nano \
     rsync \
     unzip \
