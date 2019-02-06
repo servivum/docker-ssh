@@ -93,7 +93,8 @@ fi
 # Create home directory
 if [ ! -d "$home_dir" ]; then
     echo "Creating home directory: $home_dir"
-    mkdir -p $SSH_HOME_DIR
+    mkdir -p $home_dir
+    mkdir -p $home_dir/.ssh/
 else
     echo "Using default home directory /home/$user"
 fi
