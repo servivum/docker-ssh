@@ -20,12 +20,6 @@ if [ ! -f "/etc/ssh/host_keys/rsa_key" ]; then
 	ssh-keygen -f /etc/ssh/host_keys/rsa_key -N '' -t rsa
 fi
 
-# Check if password or public key is given via file or env var.
-if ([ -z "$SSH_PASSWORD" ] && [ -z "$SSH_PASSWORD_FILE" ] && [ -z "$SSH_PUBLIC_KEY" ] && [ -z "$SSH_PUBLIC_KEY_FILE" ]); then
-    echo "No password or ssh public key defined"
-    exit 2
-fi
-
 # Use user from file or env var or use root user
 if [ "$SSH_USER_FILE" ]; then
     echo "Using user defined in file…"
@@ -55,9 +49,11 @@ fi
 if [ "$SSH_PUBLIC_KEY_FILE" ]; then
     echo "Using public key defined in file…"
     public_key=$(cat $SSH_PUBLIC_KEY_FILE)
-else
+elif [ "$SSH_PUBLIC_KEY" ]; then
     echo "Using public key defined in env var…"
-    public_key="$SSH_PUBLIC_KEY"
+    public_key="$SSH_PASSWORD"
+else
+    echo "Skipping public key authentication…"
 fi
 
 # Set shell if defined
