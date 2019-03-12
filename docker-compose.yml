@@ -16,6 +16,8 @@ services:
       SSH_SHELL: "/bin/bash"
       SSH_USER_ID: 100
       SSH_GROUP_ID: 101
+      #SSH_USER_ID: 33
+      #SSH_GROUP_ID: 33
     ports:
       - "2222:22"
     volumes:

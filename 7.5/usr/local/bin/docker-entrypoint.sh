@@ -115,25 +115,31 @@ if [ "$SSH_GROUP_ID" ]; then
         group_name=$(eval $group_name_command)
         echo "Using existing group $group_name…"
         group_id_command="-G $group_name"
+        group="$group_name"
     else
         echo "Creating group with GID: $SSH_GROUP_ID…"
         addgroup -g $SSH_GROUP_ID $user
         group_id_command="-G $user"
+        group="$user"
     fi
 fi
 
-# Create user
-if getent passwd "$SSH_USER_ID"
+# Create user if needed
+if getent passwd "$SSH_USER_ID" > /dev/null 2>&1
 then
-    echo "User already exists"
+    user_name_command="getent passwd $SSH_USER_ID | cut -d: -f1"
+    user_name=$(eval $user_name_command)
+    echo "Using existing user $user_name…"
+    user_id_command="-G $user_name"
+    user="$user_name"
 else
-    echo "User $user created."
+    echo "Creating user $user with $SSH_USER_ID created."
     adduser $password_command $home_dir_command $shell_command $user_id_command $group_id_command $user
 fi
 
 # Change owner .ssh directory
 if [ "$SSH_GROUP_ID" ]; then
-    chown -R $user:$user $home_dir/.ssh
+    chown -R $user:$group $home_dir/.ssh
 else
     chown -R $user $home_dir/.ssh
 fi
