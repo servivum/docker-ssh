@@ -123,7 +123,10 @@ if [ "$SSH_GROUP_ID" ]; then
 fi
 
 # Create user
-if ! id "$1" > /dev/null 2>&1; then
+if getent passwd "$SSH_USER_ID"
+then
+    echo "User already exists"
+else
     echo "User $user created."
     adduser $password_command $home_dir_command $shell_command $user_id_command $group_id_command $user
 fi
