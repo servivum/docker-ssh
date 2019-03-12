@@ -106,17 +106,25 @@ if [ "$public_key" ]; then
     echo "Public key added"
 fi
 
-# Create group
+# Create group if needed
 group_id_command=""
 if [ "$SSH_GROUP_ID" ]; then
-    echo "Using group ID $SSH_GROUP_ID…"
-    addgroup -g $SSH_GROUP_ID $user
-    group_id_command="-G $user"
+    if grep -q ":$SSH_GROUP_ID:" /etc/group
+    then
+        group_name_command="getent group | awk -F: '\$3 == $SSH_GROUP_ID { print \$1 }'"
+        group_name=$(eval $group_name_command)
+        echo "Using existing group $group_name…"
+        group_id_command="-G $group_name"
+    else
+        echo "Creating group with GID: $SSH_GROUP_ID…"
+        addgroup -g $SSH_GROUP_ID $user
+        group_id_command="-G $user"
+    fi
 fi
 
 # Create user
 if ! id "$1" > /dev/null 2>&1; then
-    echo "User ($user) created."
+    echo "User $user created."
     adduser $password_command $home_dir_command $shell_command $user_id_command $group_id_command $user
 fi
 
