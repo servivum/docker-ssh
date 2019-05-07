@@ -1,0 +1,5 @@
+
+Welcome to Servivum SSH Container!
+
+Keep in mind that containers are ephemeral and only directories placed in a volume are persistent.
+

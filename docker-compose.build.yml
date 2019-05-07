@@ -9,3 +9,7 @@ services:
     image: servivum/ssh:7.5-common
     build:
       context: 7.5-common/
+  ssh-7.5-php:
+    image: servivum/ssh:7.5-php
+    build:
+      context: 7.5-php/
