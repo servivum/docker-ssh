@@ -75,6 +75,13 @@ else
     user_id_command=""
 fi
 
+# Show group ID
+if [ "$SSH_GROUP_ID" ]; then
+    echo "Using group ID $SSH_GROUP_ID…"
+else
+    echo "No group ID set"
+fi
+
 # Use custom home directory
 home_dir_command=""
 if [ "$user" == "root" ]; then
@@ -106,36 +113,39 @@ if [ "$public_key" ]; then
     echo "Public key added"
 fi
 
-# Create group if needed
+# Delete existing group if needed
 group_id_command=""
-if [ "$SSH_GROUP_ID" ]; then
+if [ "$SSH_GROUP_ID" ]
+then
     if grep -q ":$SSH_GROUP_ID:" /etc/group
     then
+        echo "Group ID $SSH_GROUP_ID already in use."
+
         group_name_command="getent group | awk -F: '\$3 == $SSH_GROUP_ID { print \$1 }'"
         group_name=$(eval $group_name_command)
-        echo "Using existing group $group_name…"
-        group_id_command="-G $group_name"
-        group="$group_name"
-    else
-        echo "Creating group with GID: $SSH_GROUP_ID…"
-        addgroup -g $SSH_GROUP_ID $user
-        group_id_command="-G $user"
-        group="$user"
+        
+        if getent passwd "$SSH_USER_ID" > /dev/null 2>&1
+        then
+            user_name_command="getent passwd $SSH_USER_ID | cut -d: -f1"
+            user_name=$(eval $user_name_command)
+
+            echo "Deleting existing user $user_name with UID $SSH_USER_ID and group $group_name with GID $SSH_GROUP_ID…"
+            deluser $user_name
+        else
+            echo "Deleting existing group $group_name with GID $SSH_GROUP_ID…"
+            delgroup $group_name
+        fi
     fi
+
+    group_id_command="-G $user"
+    group="$user"
+
+    addgroup -g $SSH_GROUP_ID $user
 fi
 
-# Create user if needed
-if getent passwd "$SSH_USER_ID" > /dev/null 2>&1
-then
-    user_name_command="getent passwd $SSH_USER_ID | cut -d: -f1"
-    user_name=$(eval $user_name_command)
-    echo "Using existing user $user_name…"
-    user_id_command="-G $user_name"
-    user="$user_name"
-else
-    echo "Creating user $user with $SSH_USER_ID created."
-    adduser $password_command $home_dir_command $shell_command $user_id_command $group_id_command $user
-fi
+# Create user
+echo "Creating user $user with $SSH_USER_ID…"
+adduser $password_command $home_dir_command $shell_command $user_id_command $group_id_command $user
 
 # Change owner .ssh directory
 if [ "$SSH_GROUP_ID" ]; then
