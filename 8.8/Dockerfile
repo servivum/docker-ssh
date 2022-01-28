@@ -1,4 +1,4 @@
-FROM servivum/php:7.2-fpm-alpine-common
+FROM alpine:3.15
 LABEL maintainer "Patrick Baber <patrick.baber@servivum.com>"
 
 # Install openssh-server
@@ -24,21 +24,6 @@ RUN apk add --no-cache \
 
 COPY etc/motd /etc/motd
 COPY usr/local/bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-
-# Install additional packages
-RUN apk add --no-cache \
-    curl \
-    git \
-    iputils \
-    mc \
-    mysql-client \
-    nano \
-    rsync \
-    unzip \
-    vim
-
-# Install Composer
-COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 VOLUME /etc/ssh/host_keys/
 EXPOSE 22
