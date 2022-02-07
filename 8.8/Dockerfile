@@ -19,6 +19,8 @@ RUN apk add --no-cache \
     sed -i 's/#HostKey \/etc\/ssh\/ssh_host_dsa_key/HostKey \/etc\/ssh\/host_keys\/dsa_key/g' /etc/ssh/sshd_config && \
     sed -i 's/#HostKey \/etc\/ssh\/ssh_host_ecdsa_key/HostKey \/etc\/ssh\/host_keys\/ecdsa_key/g' /etc/ssh/sshd_config && \
     sed -i 's/#HostKey \/etc\/ssh\/ssh_host_ed25519_key/HostKey \/etc\/ssh\/host_keys\/ed25519_key/g' /etc/ssh/sshd_config && \
+    echo "Enabling AllowTcpForwarding…" && \
+    sed -i 's/AllowTcpForwarding no/AllowTcpForwarding yes/g' /etc/ssh/sshd_config && \
     echo "Preparing run direcotry for sshd…" && \
     mkdir -p /var/run/sshd
 
