@@ -1,4 +1,4 @@
-![SSH-Server 7.5](https://img.shields.io/badge/SSH-7.5-brightgreen.svg?style=flat-square) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT) [![Travis](https://img.shields.io/travis/servivum/docker-ssh.svg?style=flat-square)](https://travis-ci.org/servivum/docker-ssh)
+![SSH-Server 7.5](https://img.shields.io/badge/SSH-7.5-brightgreen.svg?style=flat-square) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 # SSH Server Docker Image
 
@@ -6,7 +6,9 @@ Dockerfile with SSH server based on a tiny Alpine Linux and if needed, preinstal
 
 ## Supported Tags
 
-- `7.5`, `latest` [(Dockerfile)](https://github.com/servivum/docker-ssh/blob/master/7.5/Dockerfile)
+- `8.8`, [(Dockerfile)](https://github.com/servivum/docker-ssh/blob/master/8.8/Dockerfile)
+- `8.8-common` [(Dockerfile)](https://github.com/servivum/docker-ssh/blob/master/8.8-common/Dockerfile)
+- `7.5`, [(Dockerfile)](https://github.com/servivum/docker-ssh/blob/master/7.5/Dockerfile)
 - `7.5-common` [(Dockerfile)](https://github.com/servivum/docker-ssh/blob/master/7.5-common/Dockerfile)
 
 ## Login with Username and Password
@@ -43,4 +45,17 @@ docker container run -d -P \
     -e "SSH_USER_ID=99" \
     -e "SSH_GROUP_ID=101" \
     servivum/ssh
+```
+
+# Multi platform builds
+
+```
+export TAG="8.8-common"
+docker buildx create --use
+docker buildx build \
+    --file ./$TAG/Dockerfile \
+    --platform linux/amd64,linux/arm64/v8 \
+    --tag servivum/ssh:$TAG \
+    --push \
+    $TAG/
 ```
