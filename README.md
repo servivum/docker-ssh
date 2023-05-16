@@ -1,5 +1,3 @@
-![SSH-Server 7.5](https://img.shields.io/badge/SSH-7.5-brightgreen.svg?style=flat-square) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-
 # SSH Server Docker Image
 
 Dockerfile with SSH server based on a tiny Alpine Linux and if needed, preinstalled with common utilities.
